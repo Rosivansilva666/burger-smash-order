@@ -14,16 +14,137 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          cliente_nome: string
+          created_at: string
+          cupom: string | null
+          desconto: number
+          endereco: string | null
+          id: string
+          itens: Json
+          modo: string
+          pagamento: string
+          pontos_ganhos: number
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          taxa_entrega: number
+          telefone: string
+          total: number
+          troco_para: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cliente_nome: string
+          created_at?: string
+          cupom?: string | null
+          desconto?: number
+          endereco?: string | null
+          id?: string
+          itens?: Json
+          modo?: string
+          pagamento?: string
+          pontos_ganhos?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          taxa_entrega?: number
+          telefone: string
+          total?: number
+          troco_para?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          cliente_nome?: string
+          created_at?: string
+          cupom?: string | null
+          desconto?: number
+          endereco?: string | null
+          id?: string
+          itens?: Json
+          modo?: string
+          pagamento?: string
+          pontos_ganhos?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          taxa_entrega?: number
+          telefone?: string
+          total?: number
+          troco_para?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          nome: string | null
+          pontos: number
+          telefone: string | null
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          nome?: string | null
+          pontos?: number
+          telefone?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nome?: string | null
+          pontos?: number
+          telefone?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      claim_kitchen_access: { Args: never; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "cozinha" | "cliente"
+      order_status:
+        | "recebido"
+        | "preparo"
+        | "pronto"
+        | "entrega"
+        | "concluido"
+        | "cancelado"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +271,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "cozinha", "cliente"],
+      order_status: [
+        "recebido",
+        "preparo",
+        "pronto",
+        "entrega",
+        "concluido",
+        "cancelado",
+      ],
+    },
   },
 } as const
