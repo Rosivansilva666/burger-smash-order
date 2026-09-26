@@ -69,7 +69,7 @@ function Cozinha() {
   }, [ehCozinha, queryClient]);
 
   const avancar = useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+    mutationFn: async ({ id, status }: { id: string; status: (typeof FLUXO)[number] }) => {
       const { error } = await supabase.from("orders").update({ status }).eq("id", id);
       if (error) throw error;
     },
@@ -137,7 +137,7 @@ function Cozinha() {
                       onClick={() => avancar.mutate({ id: p.id, status: proximo })}
                       className="h-11 rounded-md bg-primary px-4 font-display text-lg text-primary-foreground disabled:opacity-60"
                     >
-                      {ROTULOS[proximo].toUpperCase()}
+                      {(ROTULOS[proximo] ?? proximo).toUpperCase()}
                     </button>
                   ) : null}
                 </div>

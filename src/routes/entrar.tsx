@@ -61,7 +61,7 @@ function Entrar() {
     }
     const novoUsuario = resposta.data.user;
     if (novoUsuario) {
-      await supabase.from("profiles").upsert({ id: novoUsuario.id, nome: novoUsuario.email });
+      await supabase.from("profiles").upsert({ id: novoUsuario.id, nome: novoUsuario.email ?? null });
     }
     toast.success("Tudo certo. Bom apetite.");
     navigate({ to: "/pedidos" });

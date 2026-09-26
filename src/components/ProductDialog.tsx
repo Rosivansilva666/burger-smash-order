@@ -49,7 +49,7 @@ export function ProductDialog({
     adicionar(
       novoItem(produto, {
         quantidade,
-        ponto: produto.montavel ? ponto : undefined,
+        ponto: produto.montavel ? ponto : null,
         adicionais: selecionados,
         observacao: observacao.trim().slice(0, 200),
       }),

@@ -89,7 +89,7 @@ export const CUPONS: Record<string, number> = {
   LIVE10: 10,
 };
 
-export const BAIRROS: { nome: string; taxa: number }[] = [
+export const BAIRROS = [
   { nome: "Centro", taxa: 5 },
   { nome: "Jardins", taxa: 7 },
   { nome: "Moema", taxa: 12 },
@@ -98,7 +98,7 @@ export const BAIRROS: { nome: string; taxa: number }[] = [
   { nome: "Itaim Bibi", taxa: 10 },
   { nome: "Brooklin", taxa: 11 },
   { nome: "Vila Olimpia", taxa: 10 },
-];
+] as const satisfies readonly { nome: string; taxa: number }[];
 
 export const LOJA = {
   nome: "BURGUER AMOSTRA",

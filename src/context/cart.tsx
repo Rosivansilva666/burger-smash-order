@@ -9,7 +9,7 @@ export type ItemCarrinho = {
   imagem: string;
   tempo: number;
   quantidade: number;
-  ponto?: string;
+  ponto: string | null;
   adicionais: Adicional[];
   observacao: string;
 };
@@ -41,7 +41,7 @@ export function novoItem(produto: Produto, dados: Partial<ItemCarrinho>): Omit<I
     imagem: produto.imagem,
     tempo: produto.tempo,
     quantidade: dados.quantidade ?? 1,
-    ponto: dados.ponto,
+    ponto: dados.ponto ?? null,
     adicionais: dados.adicionais ?? [],
     observacao: dados.observacao ?? "",
   };

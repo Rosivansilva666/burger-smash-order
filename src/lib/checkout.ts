@@ -15,7 +15,7 @@ export type Checkout = {
 
 export const CHECKOUT_INICIAL: Checkout = {
   modo: "entrega",
-  bairro: BAIRROS[0].nome,
+  bairro: "Centro",
   endereco: "",
   cupomTexto: "",
   cupomAplicado: null,
