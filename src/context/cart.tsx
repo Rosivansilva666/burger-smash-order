@@ -1,3 +1,4 @@
+import type React from "react";
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import type { Adicional, Produto } from "@/lib/menu";
 
@@ -26,7 +27,10 @@ type CartContextValue = {
   ultimaAdicao: number;
 };
 
-const CartContext = createContext<CartContextValue | null>(null);
+// Mantem a mesma instancia do contexto entre recargas do editor (HMR)
+const globalCart = globalThis as unknown as { __cartContext?: React.Context<CartContextValue | null> };
+const CartContext =
+  globalCart.__cartContext ?? (globalCart.__cartContext = createContext<CartContextValue | null>(null));
 
 export function precoItem(item: ItemCarrinho): number {
   const extras = item.adicionais.reduce((soma, a) => soma + a.preco, 0);
