@@ -79,7 +79,10 @@ export function CartSheet({ aberto, onFechar }: { aberto: boolean; onFechar: () 
       modo: dados.modo,
       endereco: dados.modo === "entrega" ? dados.endereco.trim() : null,
       pagamento: dados.pagamento,
-      troco_para: dados.pagamento === "Dinheiro" ? null : null,
+      troco_para:
+        dados.pagamento === "Dinheiro" && dados.troco
+          ? Number(dados.troco.replace(/[^\d,]/g, "").replace(",", ".")) || null
+          : null,
       itens: itens.map((i) => ({
         nome: i.nome,
         quantidade: i.quantidade,
