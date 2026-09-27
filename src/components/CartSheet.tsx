@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import { useNavigate } from "@tanstack/react-router";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { CartItemsList } from "@/components/CartItemsList";
 import { CheckoutFields } from "@/components/CheckoutFields";
 import { brl } from "@/lib/format";
 import { CUPONS } from "@/lib/menu";
 import { useCart } from "@/context/cart";
-import { useAuth } from "@/hooks/useAuth";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { supabase } from "@/integrations/supabase/client";
 import { linkWhatsapp, montarTextoPedido } from "@/lib/whatsapp";
 import {
   CHECKOUT_INICIAL,
@@ -21,8 +18,6 @@ import {
 
 export function CartSheet({ aberto, onFechar }: { aberto: boolean; onFechar: () => void }) {
   const { itens, subtotal, tempoEstimado, limpar } = useCart();
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const ehMobile = useIsMobile();
   const [dados, setDados] = useState<Checkout>(CHECKOUT_INICIAL);
   const [erros, setErros] = useState<ErrosCheckout>({});
@@ -42,16 +37,10 @@ export function CartSheet({ aberto, onFechar }: { aberto: boolean; onFechar: () 
     }
   };
 
-  const enviar = async () => {
+  const enviar = () => {
     const novosErros = validarCheckout(dados);
     setErros(novosErros);
     if (Object.keys(novosErros).length > 0) return;
-    if (!user) {
-      toast.error("Entre na sua conta para finalizar o pedido");
-      onFechar();
-      navigate({ to: "/entrar" });
-      return;
-    }
 
     setEnviando(true);
     const texto = montarTextoPedido({
@@ -72,40 +61,9 @@ export function CartSheet({ aberto, onFechar }: { aberto: boolean; onFechar: () 
       tempoEstimado,
     });
 
-    const { error } = await supabase.from("orders").insert({
-      user_id: user.id,
-      cliente_nome: dados.nome.trim(),
-      telefone: dados.telefone,
-      modo: dados.modo,
-      endereco: dados.modo === "entrega" ? dados.endereco.trim() : null,
-      pagamento: dados.pagamento,
-      troco_para:
-        dados.pagamento === "Dinheiro" && dados.troco
-          ? Number(dados.troco.replace(/[^\d,]/g, "").replace(",", ".")) || null
-          : null,
-      itens: itens.map((i) => ({
-        nome: i.nome,
-        quantidade: i.quantidade,
-        ponto: i.ponto ?? null,
-        adicionais: i.adicionais.map((a) => a.nome),
-        observacao: i.observacao,
-      })),
-      cupom: dados.cupomAplicado,
-      subtotal,
-      desconto,
-      taxa_entrega: taxa,
-      total,
-      pontos_ganhos: Math.floor(total / 10),
-    });
-    setEnviando(false);
-
-    if (error) {
-      toast.error("Nao deu pra registrar o pedido. Tente de novo em instantes.");
-      return;
-    }
-
     window.open(linkWhatsapp(texto), "_blank", "noopener");
-    toast.success("Pedido registrado. Finalize no WhatsApp.");
+    setEnviando(false);
+    toast.success("Pedido montado. Finalize no WhatsApp.");
     limpar();
     setDados(CHECKOUT_INICIAL);
     onFechar();

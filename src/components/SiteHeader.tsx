@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { LogIn, LogOut, Receipt } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
-import { Button } from "@/components/ui/button";
 import { LOJA } from "@/lib/menu";
 import { lojaAberta } from "@/lib/format";
-import { useAuth } from "@/hooks/useAuth";
 
 export function SiteHeader() {
   const [comScroll, setComScroll] = useState(false);
   const [aberta, setAberta] = useState(false);
-  const { user, sair } = useAuth();
 
   useEffect(() => {
     setAberta(lojaAberta(LOJA.abreHora, LOJA.fechaHora));
@@ -47,30 +43,6 @@ export function SiteHeader() {
             {LOJA.abreHora}h as {LOJA.fechaHora}h
           </p>
           <p>{LOJA.endereco}</p>
-        </div>
-
-        <div className="ml-auto flex items-center gap-1 lg:ml-3">
-          {user ? (
-            <>
-              <Button asChild variant="ghost" size="sm" className="h-11 px-2">
-                <Link to="/pedidos" aria-label="Meus pedidos">
-                  <Receipt className="size-5" />
-                  <span className="hidden sm:inline">Pedidos</span>
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm" className="h-11 px-2" onClick={sair}>
-                <LogOut className="size-5" />
-                <span className="sr-only">Sair</span>
-              </Button>
-            </>
-          ) : (
-            <Button asChild variant="ghost" size="sm" className="h-11 px-2">
-              <Link to="/entrar">
-                <LogIn className="size-5" />
-                <span className="hidden sm:inline">Entrar</span>
-              </Link>
-            </Button>
-          )}
         </div>
       </div>
     </header>
