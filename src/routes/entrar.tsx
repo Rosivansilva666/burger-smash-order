@@ -16,7 +16,7 @@ export const Route = createFileRoute("/entrar")({
         content: "Acesse sua conta para acompanhar pedidos e pontos de fidelidade da Burguer Amostra.",
       },
       { property: "og:title", content: "Entrar: Burguer Amostra" },
-      { property: "og:description", content: "Conta do cliente e painel da cozinha." },
+      { property: "og:description", content: "Conta do cliente para acompanhar pedidos." },
     ],
   }),
   component: Entrar,
