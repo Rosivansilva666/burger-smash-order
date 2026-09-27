@@ -2,13 +2,10 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 
-export const EMAIL_COZINHA = "burgueramostra@gmail.com";
-
 type AuthContextValue = {
   user: User | null;
   session: Session | null;
   carregando: boolean;
-  ehCozinha: boolean;
   sair: () => Promise<void>;
 };
 
@@ -35,7 +32,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     session,
     carregando,
-    ehCozinha: (user?.email ?? "").toLowerCase() === EMAIL_COZINHA,
     sair: async () => {
       await supabase.auth.signOut();
     },

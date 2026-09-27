@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { LogIn, LogOut, ChefHat, Receipt } from "lucide-react";
+import { LogIn, LogOut, Receipt } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/ui/button";
 import { LOJA } from "@/lib/menu";
@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 export function SiteHeader() {
   const [comScroll, setComScroll] = useState(false);
   const [aberta, setAberta] = useState(false);
-  const { user, ehCozinha, sair } = useAuth();
+  const { user, sair } = useAuth();
 
   useEffect(() => {
     setAberta(lojaAberta(LOJA.abreHora, LOJA.fechaHora));
@@ -52,14 +52,6 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-1 lg:ml-3">
           {user ? (
             <>
-              {ehCozinha ? (
-                <Button asChild variant="ghost" size="sm" className="h-11 px-2">
-                  <Link to="/cozinha" aria-label="Painel da cozinha">
-                    <ChefHat className="size-5" />
-                    <span className="hidden sm:inline">Cozinha</span>
-                  </Link>
-                </Button>
-              ) : null}
               <Button asChild variant="ghost" size="sm" className="h-11 px-2">
                 <Link to="/pedidos" aria-label="Meus pedidos">
                   <Receipt className="size-5" />
