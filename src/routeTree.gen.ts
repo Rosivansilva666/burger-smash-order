@@ -10,18 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CozinhaRouteImport } from './routes/cozinha'
 import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as PedidosRouteImport } from './routes/pedidos'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CozinhaRoute = CozinhaRouteImport.update({
-  id: '/cozinha',
-  path: '/cozinha',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EntrarRoute = EntrarRouteImport.update({
@@ -37,34 +31,30 @@ const PedidosRoute = PedidosRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/cozinha': typeof CozinhaRoute
   '/entrar': typeof EntrarRoute
   '/pedidos': typeof PedidosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/cozinha': typeof CozinhaRoute
   '/entrar': typeof EntrarRoute
   '/pedidos': typeof PedidosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/cozinha': typeof CozinhaRoute
   '/entrar': typeof EntrarRoute
   '/pedidos': typeof PedidosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cozinha' | '/entrar' | '/pedidos'
+  fullPaths: '/' | '/entrar' | '/pedidos'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cozinha' | '/entrar' | '/pedidos'
-  id: '__root__' | '/' | '/cozinha' | '/entrar' | '/pedidos'
+  to: '/' | '/entrar' | '/pedidos'
+  id: '__root__' | '/' | '/entrar' | '/pedidos'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CozinhaRoute: typeof CozinhaRoute
   EntrarRoute: typeof EntrarRoute
   PedidosRoute: typeof PedidosRoute
 }
@@ -76,13 +66,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cozinha': {
-      id: '/cozinha'
-      path: '/cozinha'
-      fullPath: '/cozinha'
-      preLoaderRoute: typeof CozinhaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/entrar': {
@@ -104,7 +87,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CozinhaRoute: CozinhaRoute,
   EntrarRoute: EntrarRoute,
   PedidosRoute: PedidosRoute,
 }
