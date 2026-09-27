@@ -5,7 +5,7 @@ import { BrandLogo } from "@/components/BrandLogo";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth, EMAIL_COZINHA } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/entrar")({
   head: () => ({
@@ -67,11 +67,6 @@ function Entrar() {
     navigate({ to: "/pedidos" });
   };
 
-  const usarDemo = () => {
-    setEmail(EMAIL_COZINHA);
-    setSenha("burguer123");
-    setModo("entrar");
-  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
@@ -122,20 +117,6 @@ function Entrar() {
             {modo === "entrar" ? "Ainda nao tenho conta" : "Ja tenho conta"}
           </button>
         </form>
-
-        <div className="mt-4 rounded-lg border border-dashed border-border p-4 text-sm">
-          <p className="font-semibold text-primary">Conta de demonstracao</p>
-          <p className="mt-1 text-muted-foreground">
-            {EMAIL_COZINHA} com a senha burguer123. Essa conta abre tambem o painel da cozinha.
-          </p>
-          <button
-            type="button"
-            onClick={usarDemo}
-            className="mt-3 h-11 w-full rounded-md border border-primary font-semibold text-primary"
-          >
-            Preencher dados de teste
-          </button>
-        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/pedidos")({
       { title: "Meus pedidos: Burguer Amostra" },
       {
         name: "description",
-        content: "Acompanhe seus pedidos, o status da cozinha e seus pontos de fidelidade.",
+        content: "Acompanhe seus pedidos e seus pontos de fidelidade.",
       },
       { property: "og:title", content: "Meus pedidos: Burguer Amostra" },
       { property: "og:description", content: "Historico de pedidos e programa de fidelidade." },
